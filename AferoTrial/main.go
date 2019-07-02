@@ -19,13 +19,26 @@ func CreateDirectory(){
 	}
 }
 
+func CreateFile(){
+	var fileName string
+	fmt.Println("Enter the name of file you want to create:")
+	_,_ = fmt.Scanf("%s", &fileName)
+
+	if status,_ := afero.Exists(AppFs, "./"+fileName); !status{
+		_, _ = AppFs.Create(fileName)
+	} else {
+		fmt.Println("File already exists")
+	}
+}
+
 func main(){
 	var input int
 	fmt.Println("1.\t Make a Directory")
-	fmt.Scanf("%d", &input)
+	fmt.Println("1.\t Make a File")
+	_, _ = fmt.Scanf("%d", &input)
 	switch input {
 	case 1: CreateDirectory()
-	case 2:
+	case 2:	CreateFile()
 	default:
 		fmt.Println("Please enter valid option")
 	}
