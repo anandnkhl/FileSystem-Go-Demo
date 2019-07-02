@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gookit/color"
 	"github.com/spf13/afero"
 )
 
@@ -15,7 +16,7 @@ func CreateDirectory(){
 	if status,_ := afero.DirExists(AppFs, "./"+dirName); !status{
 		_ = AppFs.Mkdir("./"+dirName, 0777)
 	}else{
-		fmt.Println("This folder already exists")
+		color.Red.Println("This folder already exists\n")
 	}
 }
 
@@ -27,19 +28,28 @@ func CreateFile(){
 	if status,_ := afero.Exists(AppFs, "./"+fileName); !status{
 		_, _ = AppFs.Create(fileName)
 	} else {
-		fmt.Println("File already exists")
+		color.Red.Println("File already exists\n")
 	}
 }
 
 func main(){
 	var input int
 	fmt.Println("1.\t Make a Directory")
-	fmt.Println("1.\t Make a File")
+	fmt.Println("2.\t Make a File")
+	fmt.Println("3.\t Exit")
 	_, _ = fmt.Scanf("%d", &input)
 	switch input {
-	case 1: CreateDirectory()
-	case 2:	CreateFile()
+	case 1:
+		CreateDirectory()
+		main()
+	case 2:
+		CreateFile()
+		main()
+	case 3:
+		color.Red.Println("Bye bye")
+		return
 	default:
-		fmt.Println("Please enter valid option")
+		color.Red.Println("Please enter valid option\n")
+		main()
 	}
 }
