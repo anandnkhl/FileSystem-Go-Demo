@@ -26,9 +26,24 @@ func CreateFile(){
 	_,_ = fmt.Scanf("%s", &fileName)
 
 	if status,_ := afero.Exists(AppFs, "./"+fileName); !status{
-		_, _ = AppFs.Create(fileName)
+		_, err := AppFs.Create(fileName)
+		if err != nil {
+			color.Red.Println(err,"\n")
+		}
 	} else {
 		color.Red.Println("File already exists\n")
+	}
+}
+
+func WriteFile(){
+	var fileName string
+	fmt.Println("Enter the file you want to edit:")
+	_,_ = fmt.Scanf("%s", &fileName)
+	AppFs.o
+	if err == nil {
+		color.Green.Println("File opened successfully")
+		fmt.Println("Enter the string to be written:")
+
 	}
 }
 
@@ -36,7 +51,8 @@ func main(){
 	var input int
 	fmt.Println("1.\t Make a Directory")
 	fmt.Println("2.\t Make a File")
-	fmt.Println("3.\t Exit")
+	fmt.Println("3.\t Write to a File")
+	fmt.Println("4.\t Exit")
 	_, _ = fmt.Scanf("%d", &input)
 	switch input {
 	case 1:
@@ -46,6 +62,9 @@ func main(){
 		CreateFile()
 		main()
 	case 3:
+		WriteFile()
+		main()
+	case 4:
 		color.Red.Println("Bye bye")
 		return
 	default:
