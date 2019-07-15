@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gookit/color"
 	"github.com/spf13/afero"
+	"syscall"
 )
 
 var AppFs = afero.NewOsFs()
@@ -39,11 +40,14 @@ func WriteFile(){
 	var fileName string
 	fmt.Println("Enter the file you want to edit:")
 	_,_ = fmt.Scanf("%s", &fileName)
-	AppFs.o
+	_, err := AppFs.OpenFile("./"+fileName, syscall.O_APPEND, 777)
 	if err == nil {
 		color.Green.Println("File opened successfully")
 		fmt.Println("Enter the string to be written:")
-
+		var toAppend string
+		_, _ = fmt.Scanf("%s", &toAppend)
+		data := []byte(toAppend)
+		_ = afero.WriteFile(AppFs, "./"+fileName, data, 777)
 	}
 }
 
