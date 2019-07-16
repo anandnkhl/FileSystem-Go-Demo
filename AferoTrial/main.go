@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FileSystem-Go-Demo/AferoTrial/Handlers"
 	"fmt"
 	"github.com/gookit/color"
 	"github.com/spf13/afero"
@@ -8,18 +9,6 @@ import (
 )
 
 var AppFs = afero.NewOsFs()
-
-func CreateDirectory(){
-	var dirName string
-	fmt.Println("Enter the name of directory you want to create:")
-	_, _ = fmt.Scanf("%s", &dirName)
-
-	if status,_ := afero.DirExists(AppFs, "./"+dirName); !status{
-		_ = AppFs.Mkdir("./"+dirName, 0777)
-	}else{
-		color.Red.Println("This folder already exists\n")
-	}
-}
 
 func CreateFile(){
 	var fileName string
@@ -64,7 +53,7 @@ func main(){
 	_, _ = fmt.Scanf("%d", &input)
 	switch input {
 	case 1:
-		CreateDirectory()
+		Handlers.CreateDirectory()
 		main()
 	case 2:
 		CreateFile()
